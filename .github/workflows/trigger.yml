@@ -19,6 +19,7 @@ jobs:
       # quickly post the workflow URL back in the original repo PR
       - name: Post workflow URL 🔗
         if: ${{ github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
+        # https://github.com/peter-evans/create-or-update-comment
         uses: peter-evans/create-or-update-comment@v3
         with:
           # need a personal token to be able to post a comment back
@@ -67,3 +68,27 @@ jobs:
           repository: bahmutov/${{ github.event.client_payload.repo }}
           body: |
             Tests result: ${{ steps.tests.outcome }}
+
+      - name: Post success reaction 📨
+        if: ${{ steps.tests.outcome == 'success' && github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          # need a personal token to be able to post a comment back
+          # in the original repo
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          comment-id: ${{ github.event.client_payload.feedbackCommentId }}
+          issue-number: ${{ github.event.client_payload.pullRequestNumber }}
+          repository: bahmutov/${{ github.event.client_payload.repo }}
+          reactions: check
+
+      - name: Post failure reaction 📨
+        if: ${{ steps.tests.outcome != 'success' && github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          # need a personal token to be able to post a comment back
+          # in the original repo
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          comment-id: ${{ github.event.client_payload.feedbackCommentId }}
+          issue-number: ${{ github.event.client_payload.pullRequestNumber }}
+          repository: bahmutov/${{ github.event.client_payload.repo }}
+          reactions: alarm

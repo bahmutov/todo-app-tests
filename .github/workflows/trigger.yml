@@ -27,7 +27,8 @@ jobs:
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
           repository: bahmutov/${{ github.event.client_payload.repo }}
-          body: Tests workflow at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          body: |
+            Tests workflow at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       # check out both the app and the tests
       - name: Checkout this repo 🛎
@@ -39,3 +40,16 @@ jobs:
           repository: bahmutov/${{ github.event.client_payload.repo }}
           ref: ${{ github.event.client_payload.ref }}
           path: app
+
+      - name: Install app dependencies 📦
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: app
+
+      - name: Start the application 🎬
+        run: |
+          cd app
+          npm run start &
+
+      - name: Run E2E tests 🏃🏻‍♂️
+        uses: cypress-io/github-action@v6

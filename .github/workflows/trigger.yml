@@ -19,3 +19,17 @@ jobs:
         run: |
           echo '### Workflow info 🖨️' >> $GITHUB_STEP_SUMMARY
           echo 'PR number ${{ github.event.client_payload.pullRequestNumber || github.event.inputs.pullRequestNumber }}' >> $GITHUB_STEP_SUMMARY
+          echo 'original repo ${{ github.event.client_payload.repo }}' >> $GITHUB_STEP_SUMMARY
+
+          if: ${{ github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
+
+      - name: Post workflow URL 🔗
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          # need a personal token to be able to post a comment back
+          # in the original repo
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          comment-id: ${{ github.event.client_payload.feedbackCommentId }}
+          issue-number: ${{ github.event.client_payload.pullRequestNumber }}
+          repository: bahmutov/${{ github.event.client_payload.repo }}
+          body: Tests workflow at $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID

@@ -69,4 +69,4 @@ jobs:
           body: |
             Tests result: ${{ steps.tests.outcome }}
           reactions: |
-            ${{ steps.tests.outcome == 'success' && 'horray' || '-1' }}
+            ${{ steps.tests.outcome == 'success' && 'hooray' || '-1' }}

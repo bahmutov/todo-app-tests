@@ -79,7 +79,7 @@ jobs:
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
           repository: bahmutov/${{ github.event.client_payload.repo }}
-          reactions: check
+          reactions: hooray
 
       - name: Post failure reaction 📨
         if: ${{ steps.tests.outcome != 'success' && github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
@@ -91,4 +91,4 @@ jobs:
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
           repository: bahmutov/${{ github.event.client_payload.repo }}
-          reactions: alarm
+          reactions: confused

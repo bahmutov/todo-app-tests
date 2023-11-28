@@ -27,7 +27,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
-          repository: bahmutov/${{ github.event.client_payload.repo }}
+          repository: ${{ github.event.client_payload.repo }}
           body: |
             Tests workflow at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
@@ -38,7 +38,7 @@ jobs:
       - name: Checkout the application repo 🛎
         uses: actions/checkout@v4
         with:
-          repository: bahmutov/${{ github.event.client_payload.repo }}
+          repository: ${{ github.event.client_payload.repo }}
           ref: ${{ github.event.client_payload.ref }}
           path: app
 
@@ -65,7 +65,7 @@ jobs:
           token: ${{ secrets.PERSONAL_TOKEN }}
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
-          repository: bahmutov/${{ github.event.client_payload.repo }}
+          repository: ${{ github.event.client_payload.repo }}
           body: |
             Tests result: ${{ steps.tests.outcome }}
           reactions: |

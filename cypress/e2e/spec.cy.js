@@ -6,7 +6,7 @@ describe('Todo app', () => {
   beforeEach(() => {
     cy.request('POST', '/reset', { todos: [] })
     cy.visit('/')
-    cy.get('.loadedz')
+    cy.get('.loaded')
   })
 
   it('adds 2 todos', function () {

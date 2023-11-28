@@ -1,0 +1,21 @@
+name: trigger
+# run this workflow on trigger or manually
+on:
+  # trigger this workflow by calling GitHub API
+  repository_dispatch:
+    types: [trigger-tests]
+  # trigger this workflow from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      pullRequestNumber:
+        description: Test the deployed PR number
+        required: false
+        type: number
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print variables 🖨️
+        run: |
+          echo '### Workflow info 🖨️' >> $GITHUB_STEP_SUMMARY
+          echo 'PR number ${{ github.event.client_payload.pullRequestNumber || github.event.inputs.pullRequestNumber }}' >> $GITHUB_STEP_SUMMARY

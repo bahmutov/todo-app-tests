@@ -31,4 +31,4 @@ jobs:
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
           repository: bahmutov/${{ github.event.client_payload.repo }}
-          body: Tests workflow at $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID
+          body: Tests workflow at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

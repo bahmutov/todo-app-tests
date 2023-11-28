@@ -52,4 +52,18 @@ jobs:
           npm run start &
 
       - name: Run E2E tests 🏃🏻‍♂️
+        id: tests
         uses: cypress-io/github-action@v6
+
+      - name: Post results 📨
+        if: ${{ always() && github.event.client_payload.repo && github.event.client_payload.feedbackCommentId }}
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          # need a personal token to be able to post a comment back
+          # in the original repo
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          comment-id: ${{ github.event.client_payload.feedbackCommentId }}
+          issue-number: ${{ github.event.client_payload.pullRequestNumber }}
+          repository: bahmutov/${{ github.event.client_payload.repo }}
+          body: |
+            Tests result: ${{ steps.tests.outcome }}

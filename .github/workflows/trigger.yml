@@ -91,4 +91,4 @@ jobs:
           comment-id: ${{ github.event.client_payload.feedbackCommentId }}
           issue-number: ${{ github.event.client_payload.pullRequestNumber }}
           repository: bahmutov/${{ github.event.client_payload.repo }}
-          reactions: confused
+          reactions: '-1'

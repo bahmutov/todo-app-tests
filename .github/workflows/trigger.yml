@@ -41,6 +41,8 @@ jobs:
       # https://github.com/bahmutov/cypress-set-github-status
       - name: Set pending commit status 🚦
         if: ${{ github.event.client_payload.commit }}
+        env:
+          PERSONAL_GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
         run: |
           npx --package cypress-set-github-status set-gh-status \
             --repo ${{ github.event.client_payload.repo }} \

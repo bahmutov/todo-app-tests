@@ -90,3 +90,16 @@ jobs:
             Tests result: ${{ steps.tests.outcome }}
           reactions: |
             ${{ steps.tests.outcome == 'success' && 'hooray' || '-1' }}
+
+      # set the commit status based on the E2E test job outcome
+      - name: Update the commit status 🚦
+        if: ${{ github.event.client_payload.commit }}
+        env:
+          PERSONAL_GH_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
+        run: |
+          npx --package cypress-set-github-status set-gh-status \
+            --repo ${{ github.event.client_payload.repo }} \
+            --commit ${{ github.event.client_payload.commit }} \
+            --status ${{ steps.tests.outcome }} --context "todo-app-tests" \
+            --description "E2E tests" \
+            --target-url ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

@@ -2,6 +2,8 @@
 
 > E2E tests for Todo app
 
+📝 Read the blog post [Separate Application And Tests Repos GitHub Actions Setup](https://glebbahmutov.com/blog/two-repo-github-actions-setup/)
+
 The app itself lives in another repo [bahmutov/todo-app](https://github.com/bahmutov/todo-app)
 
 ## Small print

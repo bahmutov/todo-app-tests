@@ -103,3 +103,4 @@ jobs:
             --status ${{ steps.tests.outcome }} --context "todo-app-tests" \
             --description "E2E tests" \
             --target-url ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          echo 'Posted job outcome ${{ steps.tests.outcome }} to ${{ github.event.client_payload.repo }} commit ${{ github.event.client_payload.commit }}' >> $GITHUB_STEP_SUMMARY
